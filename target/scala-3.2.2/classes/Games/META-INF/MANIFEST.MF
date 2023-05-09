@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: Games.main
+Class-Path: scala3-library_3-3.2.2.jar scala-library-2.13.10.jar
+

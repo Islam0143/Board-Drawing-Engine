@@ -1,0 +1,67 @@
+[0m[[0m[0mdebug[0m] [0m[0mPackaging C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\board-drawing-engine_3-0.1.0-SNAPSHOT.jar ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\AbstractEngine$package$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\AbstractEngine$package$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\AbstractEngine$package.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\AbstractEngine$package.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\AbstractEngine$package.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\AbstractEngine$package.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\Checkers$package$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\Checkers$package$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\Checkers$package.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\Checkers$package.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\Checkers$package.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\Checkers$package.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\Chess$package$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\Chess$package$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\Chess$package.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\Chess$package.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\Chess$package.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\Chess$package.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\Connect4$package$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\Connect4$package$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\Connect4$package.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\Connect4$package.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\Connect4$package.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\Connect4$package.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\main$package$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\main$package$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\main$package.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\main$package.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\main$package.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\main$package.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\main.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\main.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\main.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\main.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\META-INF[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\META-INF[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\META-INF\MANIFEST.MF[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\META-INF\MANIFEST.MF[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\Queens8$package$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\Queens8$package$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\Queens8$package.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\Queens8$package.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\Queens8$package.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\Queens8$package.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\Sudoku$package$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\Sudoku$package$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\Sudoku$package.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\Sudoku$package.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\Sudoku$package.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\Sudoku$package.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\TicTacToe$package$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\TicTacToe$package$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\TicTacToe$package.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\TicTacToe$package.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\TicTacToe$package.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\TicTacToe$package.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\Utilities$package$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\Utilities$package$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\Utilities$package.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\Utilities$package.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Games\Utilities$package.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Islam\Desktop\Board Drawing Engine\target\scala-3.2.2\classes\Games\Utilities$package.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0mDone packaging.[0m

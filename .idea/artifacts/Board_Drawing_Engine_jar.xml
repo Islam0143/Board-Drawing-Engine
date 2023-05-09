@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact name="Board Drawing Engine:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Board_Drawing_Engine_jar</output-path>
+    <root id="root">
+      <element id="archive" name="Board Drawing Engine.jar">
+        <element id="module-output" name="Board Drawing Engine" />
+      </element>
+      <element id="library" level="project" name="sbt: org.scala-lang:scala3-library_3:3.2.2:jar" />
+      <element id="library" level="project" name="sbt: org.scala-lang:scala-library:2.13.10:jar" />
+    </root>
+  </artifact>
+</component>
