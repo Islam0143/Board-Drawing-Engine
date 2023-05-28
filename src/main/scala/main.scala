@@ -1,7 +1,7 @@
 package Games
 
-import java.awt._
-import javax.swing._
+import java.awt.*
+import javax.swing.*
 import scala.collection.immutable.List
 
 @main def main(): Unit = {
@@ -19,5 +19,5 @@ import scala.collection.immutable.List
   panel.setPreferredSize(frame.getSize)
   frame.add(panel)
   frame.setVisible(true)
-  gameChooser(frame, panel)
+  gameChooser(frame)
 }

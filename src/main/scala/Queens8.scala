@@ -3,14 +3,16 @@ package Games
 import java.awt._
 import javax.swing._
 import scala.collection.immutable.List
-
-
+import org.jpl7._
 def Queens8InitializeGrid(): Array[Array[String]] = Array.fill(8, 8)(" ")
 
-def Queens8Drawer(grid: Array[Array[String]], frame: JFrame, panel: JPanel): Array[Array[String]] = {
+def Queens8Drawer(grid: Array[Array[String]]): Array[Array[String]] = {
   val buttonsList: List[List[JButton]] = List.fill(8, 8)(new JButton())
-  panel.removeAll()
-  panel.setLayout(new GridLayout(8, 8))
+  val frame = new JFrame("Board Drawing Game")
+  frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
+  frame.setSize(500, 500)
+  val panel = new JPanel(new GridLayout(8, 8))
+  panel.setSize(480, 480)
   val lettersPanel = new JPanel(new GridLayout(1, 9))
   List("a", "b", "c", "d", "e", "f", "g", "h").foreach {
     letter => lettersPanel.add(new JLabel(letter, SwingConstants.CENTER))
@@ -42,22 +44,36 @@ def Queens8Controller(move: String, grid: Array[Array[String]], player: Int): An
     grid
   }
   def Queens8IsValid(move: String, grid: Array[Array[String]]): Boolean = {
-    move.length == 2 && (move.toList.zipWithIndex match {
-      case List((row, 0), (col, 1)) =>
-        Queens8ValidDigit(row) && Queens8ValidChar(col) &&
-          (grid(row.asDigit - 1)(map(col)) match {
-            case " " =>
-              !grid.flatten.zipWithIndex.filter(x => x._2 / 8 == row.asDigit-1 || x._2 % 8 == map(col) ||
-                x._2 / 8 + x._2 % 8 == row.asDigit-1+map(col) ||
-                x._2 / 8 - x._2 % 8 == row.asDigit-1-map(col)).map(_._1).contains("\u265B")
-            case _ => true
-          })
+    move.length == 2 && ( move.toList.zipWithIndex match {
+      case List((row, 0), (col, 1)) => Queens8ValidDigit(row) && Queens8ValidChar(col)
+        && ( grid(row.asDigit - 1)(map(col)) match
+        case " " => !grid.flatten.zipWithIndex.filter(x => x._2 / 8 == row.asDigit-1
+          || x._2 % 8 == map(col)
+          || x._2 / 8 + x._2 % 8 == row.asDigit - 1 + map(col)
+          || x._2 / 8 - x._2 % 8 == row.asDigit - 1 - map(col) )
+          .map(_._1).contains("\u265B")
+        case _ => true
+        )
       case _ => false
     })
   }
-
-  Queens8IsValid(move, grid) match {
-    case false => invalid1Player(player)
-    case true => Queens8UpdateGrid(move.charAt(0).asDigit - 1, map(move.charAt(1)), grid)
+  
+  move match {
+    case "solve" => new Query("consult('Queens8Solver.pl')").nextSolution
+      val Queens = grid.transpose.map(col => if (col.contains("\u265B")) col.indexOf("\u265B") + 1 else "_").mkString("[", ", ", "]")
+      val query = Query(s"Solution = $Queens, queens8(Solution).")
+      query.hasNext match {
+        case true => query.nextSolution.get("Solution").asInstanceOf[Compound].toString
+          .stripPrefix("[").stripSuffix("]")
+          .split(", ").map(_.toInt).toList
+          .zipWithIndex.foreach { case (row, col) =>
+            grid(row - 1).update(col, "\u265B")
+          }
+          grid 
+        case false => notSolvableFunction
+      } 
+    case _ => Queens8IsValid(move, grid) match
+      case false => invalid1PlayerFunction
+      case true => Queens8UpdateGrid(move.charAt(0).asDigit - 1, map(move.charAt(1)), grid)
   }
 }

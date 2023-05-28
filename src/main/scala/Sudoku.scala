@@ -6,7 +6,8 @@ import scala.annotation.tailrec
 import scala.collection.immutable.List
 import scala.util.Random.{between, nextInt}
 import scala.util.matching.Regex
-
+import java.io.PrintWriter
+import org.jpl7._
 
 def SudokuInitializeGrid(): Array[Array[String]] = {
   @tailrec
@@ -30,33 +31,30 @@ def SudokuInitializeGrid(): Array[Array[String]] = {
 
   def fillRecursion(cell: Int, grid: Array[Array[String]], exist: Array[Array[Array[Boolean]]]): Boolean = cell match {
     case 81 => true
-    case c if (c / 9 / 3 * 3 + c % 9 / 3) % 4 == 0 => fillRecursion(c + 1, grid, exist)
+    case c if grid(cell / 9)(cell % 9).startsWith("r") => fillRecursion(c + 1, grid, exist)
     case _ =>
-      if (grid(cell / 9)(cell % 9).startsWith("r")) fillRecursion(cell + 1, grid, exist)
-      else {
-        Range(1, 10, 1)
-          .filter(i => !exist(0)(cell / 9)(i) && !exist(1)(cell % 9)(i) && !exist(2)(cell / 9 / 3 * 3 + cell % 9 / 3)(i))
-          .map(i => {
-            exist(0)(cell / 9).update(i, true)
-            exist(1)(cell % 9).update(i, true)
-            exist(2)(cell / 9 / 3 * 3 + cell % 9 / 3).update(i, true)
-            val solved = fillRecursion(cell + 1, grid, exist)
-            exist(0)(cell / 9).update(i, false)
-            exist(1)(cell % 9).update(i, false)
-            exist(2)(cell / 9 / 3 * 3 + cell % 9 / 3).update(i, false)
-            (solved, i)
-          })
-          .find(_._1)
-          .foreach { case (solved, num) => grid(cell / 9).update(cell % 9, "r" + num.toString) }
-        grid(cell / 9)(cell % 9).startsWith("r") && fillRecursion(cell + 1, grid, exist)
-      }
+      Range(1, 10, 1)
+      .filter(i => !exist(0)(cell / 9)(i) && !exist(1)(cell % 9)(i) && !exist(2)(cell / 9 / 3 * 3 + cell % 9 / 3)(i))
+      .map(i => {
+        exist(0)(cell / 9).update(i, true)
+        exist(1)(cell % 9).update(i, true)
+        exist(2)(cell / 9 / 3 * 3 + cell % 9 / 3).update(i, true)
+        val solved = fillRecursion(cell + 1, grid, exist)
+        exist(0)(cell / 9).update(i, false)
+        exist(1)(cell % 9).update(i, false)
+        exist(2)(cell / 9 / 3 * 3 + cell % 9 / 3).update(i, false)
+        (solved, i)
+      })
+      .find(_._1)
+      .map { (_, num) =>
+        grid(cell / 9).update(cell % 9, "r".concat(num.toString))
+        true
+      }.getOrElse(false)
   }
 
   def deleteRandomCells(grid: Array[Array[String]]): Unit = {
     grid.indices.foreach(i => grid(i).indices.foreach(j => {
-      grid(i)(j) = between(1, 11) compare 4 match
-        case 1 => "b "
-        case _ => grid(i)(j)
+      grid(i).update(j, if ((between(1, 11) compare 4).equals(1)) "b " else grid(i)(j))
     }))
   }
 
@@ -69,19 +67,13 @@ def SudokuInitializeGrid(): Array[Array[String]] = {
   randomGrid(Array.fill(9, 9)("b "), Array.fill(3, 9, 10)(false))
 }
 
-def isValidPlacement(grid: Array[Array[String]], row: Int, col: Int, num: Char): Boolean = {
-  !List(grid(row).toList.flatten, grid.flatMap(row => row(col)).toList, grid
-    .slice(row / 3 * 3, row / 3 * 3 + 3)
-    .flatMap(row => row.slice(col / 3 * 3, col / 3 * 3 + 3)).flatten.toList)
-    .flatten.contains(num)
-}
-
-def SudokuDrawer(grid: Array[Array[String]], frame: JFrame, panel: JPanel): Array[Array[String]] = {
-  panel.removeAll()
-  panel.setLayout(new GridLayout(3, 3, 2, 2))
-  panel.setBackground(Color.BLACK)
+def SudokuDrawer(grid: Array[Array[String]]): Array[Array[String]] = {
+  val frame = new JFrame("Board Drawing Game")
+  frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
   frame.setSize(640, 640)
+  val panel = new JPanel(new GridLayout(3, 3, 2, 2))
   panel.setSize(600, 600)
+  panel.setBackground(Color.BLACK)
   val lettersPanel = new JPanel(new GridLayout(1, 10))
   List("a", "b", "c", "d", "e", "f", "g", "h", "i").foreach {
     letter => lettersPanel.add(new JLabel(letter, SwingConstants.CENTER))
@@ -119,7 +111,14 @@ def SudokuController(move: String, grid: Array[Array[String]], player: Int): Any
     grid
   }
 
-  def SudokuIsValid(move: String, grid: Array[Array[String]], insertPattern: Regex, removePattern: Regex): Boolean = move match {
+  def isValidPlacement(grid: Array[Array[String]], row: Int, col: Int, num: Char): Boolean = {
+    !List(grid(row).toList.flatten, grid.flatMap(row => row(col)).toList, grid
+      .slice(row / 3 * 3, row / 3 * 3 + 3)
+      .flatMap(row => row.slice(col / 3 * 3, col / 3 * 3 + 3)).flatten.toList)
+      .flatten.contains(num)
+  }
+
+  def SudokuIsValid(move: String, grid: Array[Array[String]], insertPattern: Regex = """([1-9])([a-i]) ([1-9])""".r, removePattern: Regex = """([1-9])([a-i])""".r): Boolean = move match {
     case insertPattern(row, col, num) => grid(row(0).asDigit - 1)(map(col(0))) match
       case "b " => isValidPlacement(grid, row(0).asDigit - 1, map(col(0)), num(0))
       case _ => false
@@ -127,8 +126,37 @@ def SudokuController(move: String, grid: Array[Array[String]], player: Int): Any
       && !grid(row(0).asDigit - 1)(map(col(0)))(1).equals(' ')
     case _ => false
   }
-  SudokuIsValid(move, grid, """([1-9])([a-i]) ([1-9])""".r, """([1-9])([a-i])""".r) match {
-    case false => invalid1Player(player)
-    case true => SudokuUpdateGrid(move.charAt(0).asDigit - 1, map(move.charAt(1)), grid, if(move.length == 4) move.substring(3) else " ")
+
+  def saveGrid(grid: Array[Array[String]]): Unit = {
+    val writer = new PrintWriter("sudoku.txt")
+    try {
+      grid.reverse.foreach { row =>
+        row.foreach {
+          cell => writer.print((if (cell(1).equals(' ')) "0" else cell(1).toString).concat(" "))
+        }
+        writer.println()
+      }
+    } finally writer.close()
+  }
+  
+  move match {
+    case "solve" => saveGrid(grid)
+      new Query("consult('SudokuSolver.pl')").nextSolution
+      val query = Query("read_and_solve_sudoku('sudoku.txt', Solution).")
+      query.hasNext match {
+        case true => query.nextSolution.get("Solution").asInstanceOf[Compound].toString
+          .stripPrefix("[[").stripSuffix("]]").split("\\], \\[")
+          .map(innerArray => innerArray.split(", ").map(_.trim))
+          .reverse.zipWithIndex.foreach { case (row, i) =>
+          row.zipWithIndex.foreach { case (cell, j) =>
+            grid(i).update(j, grid(i)(j).substring(0, 1).concat(cell))
+            }
+          }
+          grid
+        case false => notSolvableFunction
+      }
+    case _ => SudokuIsValid (move, grid) match
+      case false => invalid1PlayerFunction
+      case true => SudokuUpdateGrid (move.charAt (0).asDigit - 1, map (move.charAt (1) ), grid, if (move.length == 4) move.substring (3) else " ")
   }
 }

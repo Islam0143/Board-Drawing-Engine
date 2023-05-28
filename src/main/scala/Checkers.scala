@@ -17,10 +17,13 @@ def CheckersInitializeGrid(): Array[Array[String]] = {
     .updated(7, Array(" ", "b\u23FA", " ", "b\u23FA", " ", "b\u23FA", " ", "b\u23FA"))
 }
 
-def CheckersDrawer(grid: Array[Array[String]], frame: JFrame, panel: JPanel): Array[Array[String]] = {
+def CheckersDrawer(grid: Array[Array[String]]): Array[Array[String]] = {
   val buttonsList: List[List[JButton]] = List.fill(8, 8)(new JButton())
-  panel.removeAll()
-  panel.setLayout(new GridLayout(8, 8))
+  val frame = new JFrame("Board Drawing Game")
+  frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
+  frame.setSize(500, 500)
+  val panel = new JPanel(new GridLayout(8, 8))
+  panel.setSize(480, 480)
   val lettersPanel = new JPanel(new GridLayout(1, 9))
   List("a", "b", "c", "d", "e", "f", "g", "h").foreach {
     letter => lettersPanel.add(new JLabel(letter, SwingConstants.CENTER))
@@ -52,24 +55,22 @@ def CheckersController(move: String, grid: Array[Array[String]], player: Int): A
   def CheckersUpdateGrid(row1: Int, col1: Int, row2: Int, col2: Int, grid: Array[Array[String]]): Array[Array[String]] = {
     grid(row2).update(col2, grid(row1)(col1))
     grid(row1).update(col1, " ")
-    if(abs(row1-row2) == 2)grid((row1+row2)/2).update((col1+col2)/2, " ")
+    if(abs(row1-row2) == 2) grid((row1+row2)/2).update((col1+col2)/2, " ")
     grid
   }
 
-  def CheckersIsValid(move: String, grid: Array[Array[String]], player: Int, inputPattern: Regex): Boolean = move match {
+  def CheckersIsValid(move: String, grid: Array[Array[String]], player: Int, inputPattern: Regex = """([1-8])([a-h]) ([1-8])([a-h])""".r): Boolean = move match {
     case inputPattern(row1, col1, row2, col2) =>
-      (grid(row1(0).asDigit - 1)(map(col1(0))), player, grid(row2(0).asDigit - 1)(map(col2(0))), row2(0) - row1(0), map(col2(0)) - map(col1(0))) match {
+      (grid(row1(0).asDigit - 1)(map(col1(0))), player, grid(row2(0).asDigit - 1)(map(col2(0))), row2(0) - row1(0), map(col2(0)) - map(col1(0))) match
         case ("w\u23FA", 1, " ", 1, 1 | -1) | ("b\u23FA", 2, " ", -1, -1 | 1) => true
         case ("w\u23FA", 1, " ", 2, 2 | -2) | ("b\u23FA", 2, " ", -2, -2 | 2) =>
-          (grid(min(row2(0).asDigit, row1(0).asDigit))(min(map(col2(0)), map(col1(0))) + 1), player) match {
+          (grid(min(row2(0).asDigit, row1(0).asDigit))(min(map(col2(0)), map(col1(0))) + 1), player) match
             case ("w\u23FA", 2) | ("b\u23FA", 1) => true
             case _ => false
-          }
         case _ => false
-          }
     case _ => false
   }
-  if(CheckersIsValid(move, grid, player, """([1-9])([a-i]) ([1-9])([a-i])""".r))
+  if(CheckersIsValid(move, grid, player)) 
     CheckersUpdateGrid(move(0).asDigit-1, map(move(1)), move(3).asDigit-1, map(move(4)), grid)
-  else invalid2Players(player)
+  else invalid2PlayersFunction
 }

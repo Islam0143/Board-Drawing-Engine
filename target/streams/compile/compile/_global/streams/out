@@ -1,12 +1,6 @@
-[0m[[0m[33mwarn[0m] [0m[0m[33m[33m-- Warning: C:\Users\Islam\Desktop\Board Drawing Engine\src\main\scala\Games.scala:1:8 [0m[0m[0m
-[0m[[0m[33mwarn[0m] [0m[0m[33m1 |[0m[33mpackage[0m Games[0m
-[0m[[0m[33mwarn[0m] [0m[0m[33m[33m  |[0m^[0m[0m
-[0m[[0m[33mwarn[0m] [0m[0m[33m  |[0mNo class, trait or object is defined in the compilation unit.[0m
-[0m[[0m[33mwarn[0m] [0m[0m[33m  |[0mThe incremental compiler cannot record the dependency information in such case.[0m
-[0m[[0m[33mwarn[0m] [0m[0m[33m  |[0mSome errors like unused import referring to a non-existent class might not be reported.[0m
-[0m[[0m[33mwarn[0m] [0m[0m[33m2 |[0m[33mimport[0m Games._[0m
-[0m[[0m[33mwarn[0m] [0m[0m[33m3 |[0m[33mimport[0m java.awt._[0m
-[0m[[0m[33mwarn[0m] [0m[0m[33m4 |[0m[33mimport[0m javax.swing._[0m
-[0m[[0m[33mwarn[0m] [0m[0m[33m5 |[0m[33mimport[0m scala.collection.immutable.{HashMap, List}[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m[33m-- Unchecked Warning: C:\Users\Islam\Desktop\Board Drawing Engine\src\main\scala\AbstractEngine.scala:28:11 [0m[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m28 |[0m      [33mcase[0m function: (Int => Int) => gameLoop(drawer, controller, switchFunc, grid, function.apply(player))[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m[33m   |[0m           ^[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m   |[0mthe type test for Int => Int cannot be checked at runtime because its type arguments can't be determined from Any[0m
 [0m[[0m[33mwarn[0m] [0m[0mthere was 1 deprecation warning; re-run with -deprecation for details[0m
 [0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m

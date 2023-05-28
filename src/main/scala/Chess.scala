@@ -16,10 +16,13 @@ def ChessInitializeGrid(): Array[Array[String]] = {
     .updated(7, Array("b\u265C", "b\u265E", "b\u265D", "b\u265B", "b\u265A", "b\u265D", "b\u265E", "b\u265C"))
 }
 
-def ChessDrawer(grid: Array[Array[String]], frame: JFrame, panel: JPanel): Array[Array[String]] = {
+def ChessDrawer(grid: Array[Array[String]]): Array[Array[String]] = {
   val buttonsList: List[List[JButton]] = List.fill(8, 8)(new JButton())
-  panel.removeAll()
-  panel.setLayout(new GridLayout(8, 8))
+  val frame = new JFrame("Board Drawing Game")
+  frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
+  frame.setSize(500, 500)
+  val panel = new JPanel(new GridLayout(8, 8))
+  panel.setSize(480, 480)
   val lettersPanel = new JPanel(new GridLayout(1, 9))
   "abcdefgh".toList.foreach {
     letter => lettersPanel.add(new JLabel(letter.toString, SwingConstants.CENTER))
@@ -45,25 +48,20 @@ def ChessDrawer(grid: Array[Array[String]], frame: JFrame, panel: JPanel): Array
 }
 
 def ChessController(move: String, grid: Array[Array[String]], player: Int): Any = {
-
   def ChessColor(player: Int): Char = if (player == 1) 'w' else 'b'
-
   def ChessUpdateGrid(row1: Int, col1: Int, row2: Int, col2: Int, grid: Array[Array[String]]): Array[Array[String]] = {
     grid(row2).update(col2, grid(row1)(col1))
     grid(row1).update(col1, " ")
     grid
   }
-
-  def ChessIsValid(move: String, grid: Array[Array[String]], player: Int, inputPattern: Regex): Boolean = move match {
-    case inputPattern(row1, col1, row2, col2) => grid(row1(0).asDigit - 1)(map(col1(0))) match {
+  def ChessIsValid(move: String, grid: Array[Array[String]], player: Int, inputPattern: Regex = """([1-8])([a-h]) ([1-8])([a-h])""".r): Boolean = move match {
+    case inputPattern(row1, col1, row2, col2) => grid(row1(0).asDigit - 1)(map(col1(0))) match
       case " " => false
       case piece => piece(0).equals(ChessColor(player)) &&
         !grid(row2(0).asDigit - 1)(map(col2(0)))(0).equals(ChessColor(player)) &&
         canMove(piece.substring(1), grid, ChessColor(player))(row1(0).asDigit - 1, map(col1(0)), row2(0).asDigit - 1, map(col2(0)))
-    }
     case _ => false
   }
-
   def canMove(piece: String, grid: Array[Array[String]], color: Char): (Int, Int, Int, Int) => Boolean = piece match {
     case "\u265F" => checkPawn(grid, pawnDirection(color), _, _, _, _)
     case "\u265C" => checkCastle(grid, _, _, _, _)
@@ -72,21 +70,19 @@ def ChessController(move: String, grid: Array[Array[String]], player: Int): Any 
     case "\u265B" => checkQueen(grid, _, _, _, _)
     case "\u265A" => checkKing
   }
-
   def pawnDirection(color: Char): Int = if (color.equals('w')) 1 else -1
   def pawnStartRow(pawnDirection: Int): Int = if (pawnDirection == 1) 1 else 6
-
   def checkPawn(grid: Array[Array[String]], pawnDirection: Int, row1: Int, col1: Int, row2: Int, col2: Int): Boolean = (col1 == col2, row2 - row1) match {
     case (true, `pawnDirection`) => grid(row2)(col2).equals(" ")
     case (true, n) if n == 2 * pawnDirection && row1 == pawnStartRow(pawnDirection) =>
-      noPieceVerticallyBetween(row1, col1, row2, col2, grid) && grid(row2)(col2).equals(" ")
+      noPieceVerticallyBetween(row1, col1, row2, col2, grid)
+      && grid(row2)(col2).equals(" ")
     case (false, `pawnDirection`) if Math.abs(col1 - col2) == 1 => grid(row2)(col2).startsWith(if (pawnDirection == 1) "b" else "w")
     case _ => false
   }
-
   def checkCastle(grid: Array[Array[String]], row1: Int, col1: Int, row2: Int, col2: Int): Boolean =
-    isVertical(row1, col1, row2, col2) && noPieceVerticallyBetween(row1, col1, row2, col2, grid) ||
-      isHorizontal(row1, col1, row2, col2) && noPieceHorizontallyBetween(row1, col1, row2, col2, grid)
+    isVertical(row1, col1, row2, col2) && noPieceVerticallyBetween(row1, col1, row2, col2, grid) 
+    || isHorizontal(row1, col1, row2, col2) && noPieceHorizontallyBetween(row1, col1, row2, col2, grid)
 
   def checkKnight(row1: Int, col1: Int, row2: Int, col2: Int): Boolean =
     List((1, 2), (2, 1)).contains((Math.abs(row1 - row2), Math.abs(col1 - col2)))
@@ -120,7 +116,7 @@ def ChessController(move: String, grid: Array[Array[String]], player: Int): Any 
       .forall { case (i, j) => grid(i)(j).equals(" ") }
   }
 
-  ChessIsValid(move, grid, player, """([1-9])([a-i]) ([1-9])([a-i])""".r) match
-    case false => invalid2Players(player)
+  ChessIsValid(move, grid, player) match
+    case false => invalid2PlayersFunction
     case true => ChessUpdateGrid(move.charAt(0).asDigit - 1, map(move.charAt(1)), move.charAt(3).asDigit - 1, map(move.charAt(4)), grid)
 }
